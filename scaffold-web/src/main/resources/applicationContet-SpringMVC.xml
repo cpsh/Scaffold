@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+
+	<!-- 默认的注解映射的支持 默认配置方案, 自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 
+		两个bean,是spring MVC为@Controllers分发请求所必须的 映射到具体的Action中的方法 -->
+	<mvc:annotation-driven />
+
+	<!-- 前面配置了<mvc:annotation-driven />，会自动注册这个bean,就不需要显式的注册这个bean了 -->
+	<!-- 
+	   <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+	       <property name="interceptors">
+				<list>
+				     <ref bean="logNDCInteceptor"/>  日志拦截器，这是你自定义的拦截器 
+				     <ref bean="myRequestHelperInteceptor"/>  RequestHelper拦截器，这是你自
+				     <ref bean="myPermissionsInteceptor"/>    权限拦截器，这是你自定义的拦截器
+				     <ref bean="myUserInfoInteceptor"/>  用户信息拦截器，这是你自定义的拦截器
+				</list>
+		   </property>
+	   </bean> 
+	 -->
+	
+	<!-- 
+	   <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	        <property name="messageConverters">
+				<list>
+					<ref bean="byteArray_hmc" />
+					<ref bean="string_hmc" />
+					<ref bean="resource_hmc" />
+					<ref bean="source_hmc" />
+					<ref bean="xmlAwareForm_hmc" />
+					<ref bean="jaxb2RootElement_hmc" />
+					<ref bean="jackson_hmc" />
+				</list>
+			</property>
+	   </bean> 
+	-->
+
+
+
+	<!-- 自动扫描的包名 扫描指定的包中的类上的注解 -->
+	<context:component-scan base-package="com.cpsh"></context:component-scan>
+
+	<!-- 
+	    @Controller 声明Action组件 
+	    @Service 声明Service组件
+	    @Service("myMovieLister") 
+		@Repository 声明Dao组件 
+		@Component 泛指组件, 当不好归类时. 
+		@RequestMapping("/menu") 请求映射 
+		@Resource 用于注入，( j2ee提供的 ) 默认按名称装配，
+		@Resource(name="beanName") 
+		@Autowired用于注入，(srping提供的) 默认按类型装配 
+		@Transactional( rollbackFor={Exception.class}) 事务管理 
+		@ResponseBody 
+		@Scope("prototype") 设定bean的作用域 
+		
+		
+	
+        @Controller
+		　　负责注册一个bean 到spring 上下文中
+		@RequestMapping
+		　　注解为控制器指定可以处理哪些 URL 请求
+		@RequestBody
+		　　该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上 ,再把HttpMessageConverter返回的对象数据绑定到 controller中方法的参数上
+		@ResponseBody
+		　　 该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区
+		@ModelAttribute 　　　
+		　　在方法定义上使用 @ModelAttribute 注解：Spring MVC 在调用目标处理方法前，会先逐个调用在方法级上标注了@ModelAttribute 的方法
+		　　在方法的入参前使用 @ModelAttribute 注解：可以从隐含对象中获取隐含的模型数据中获取对象，再将请求参数 –绑定到对象中，再传入入参将方法入参对象添加到模型中 
+		@RequestParam　
+		　　在处理方法入参处使用 @RequestParam 可以把请求参 数传递给请求方法
+		@PathVariable
+		　　绑定 URL 占位符到入参
+		@ExceptionHandler
+		　　注解到方法上，出现异常时会执行该方法
+		@ControllerAdvice
+		　　使一个Contoller成为全局的异常处理类，类中用@ExceptionHandler方法注解的方法可以处理所有Controller发生的异常		
+-->
+
+
+
+
+
+
+
+	<!-- 视图解释类 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/views/" />
+		<!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
+		<property name="suffix" value=".jsp" />
+
+	</bean>
+
+
+	<!-- 拦截器 -->
+	<!-- Spring MVC并没有总的拦截器，不能对所有的请求进行前后拦截。 -->
+	<!-- 
+	<mvc:interceptors>
+	   // <mvc:interceptors/>会为每一个HandlerMapping，注入一个拦截器 
+		<bean class="com.cpsh.inteceptor.mvc.MyInteceptor" /> 
+		<mvc:interceptor>
+			<mvc:mapping path="/hello/*" />
+			<bean class="com.cpsh.inteceptor.mvc.MyInteceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+    -->
+
+
+	<!-- 异常错误处理 -->
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView">
+			<value>/error/404</value>
+		</property>
+		<property name="defaultStatusCode">
+			<value>500</value>
+		</property>
+		<property name="warnLogCategory">
+			<value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>
+		</property>
+	</bean>
+
+
+
+
+
+
+	<!-- 对静态资源文件的访问 方案一 -->
+
+	<!-- <mvc:default-servlet-handler /> -->       <!-- 使用默认的Servlet来响应静态文件 -->
+
+	<!-- 对静态资源文件的访问 方案二 匹配URL 
+	    /images/** 的URL被当做静态资源，由Spring读出到内存中再响应http /images/**映射到ResourceHttpRequestHandler进行处理，
+	    location指定静态资源的位置.可以是web application根目录 下、jar包里面，这样可以把静态资源压缩到jar包中。
+	    cache-period 可以使得静态资源进行web cache -->
+	 <mvc:resources mapping="/res/images/**" location="/common/images/" cache-period="31556926" /> 
+	 <mvc:resources mapping="/res/js/**" location="/common/js/" cache-period="31556926" /> 
+	 <mvc:resources mapping="/res/css/**" location="/common/css/" cache-period="31556926"/> 
+
+
+
+	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+	<!-- <bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> 
+		<property name="supportedMediaTypes"> <list> <value>text/html;charset=UTF-8</value> 
+		</list> </property> </bean> -->
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
+		<property name="messageConverters"> <list> json转换器 <ref bean="mappingJacksonHttpMessageConverter" 
+		/> </list> </property> </bean> -->
+
+
+
+</beans>

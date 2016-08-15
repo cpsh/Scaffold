@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/task  
+                        http://www.springframework.org/schema/task/spring-task-3.2.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                        http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+	xmlns:task="http://www.springframework.org/schema/task">
+
+    <!-- c3p0 数据库链接池配置 -->
+<!-- 	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>jdbc:mysql://192.168.1.200/51auto_v4?user=root&amp;password=51auto_v4&amp;useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=gbk&amp;jdbcCompliantTruncation=false</value>
+		</property>
+		<property name="user">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>51auto_v4</value>
+		</property>
+		连接池中保留的最小连接数。
+		<property name="minPoolSize" value="10" />
+		连接池中保留的最大连接数。Default: 15
+		<property name="maxPoolSize" value="100" />
+		最大空闲时间,1800秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0
+		<property name="maxIdleTime" value="1800" />
+		当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3
+		<property name="acquireIncrement" value="3" />
+		<property name="maxStatements" value="1000" />
+		<property name="initialPoolSize" value="10" />
+		每60秒检查所有连接池中的空闲连接。Default: 0
+		<property name="idleConnectionTestPeriod" value="60" />
+		定义在从数据库获取新连接失败后重复尝试的次数。Default: 30
+		<property name="acquireRetryAttempts" value="30" />
+		<property name="breakAfterAcquireFailure" value="true" />
+		<property name="testConnectionOnCheckout" value="false" />
+	</bean>
+ -->	
+	<!-- druid 数据库链接池配置 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" >
+            <value>jdbc:mysql://192.168.1.200/51auto_v4?user=root&amp;password=51auto_v4&amp;useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=gbk&amp;jdbcCompliantTruncation=false</value>
+        </property>
+        <property name="username" value="root" />
+        <property name="password" value="51auto_v4" />
+
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="0" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="100" />
+        <!-- 连接池最大空闲 -->
+        <property name="maxIdle" value="200" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="0" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+
+        <!-- <property name="poolPreparedStatements" value="true" /> <property name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
+
+<!--         <property name="validationQuery" value="${validationQuery}" /> -->
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="testWhileIdle" value="true" />
+
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="25200000" />
+
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="1800" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="true" />
+
+        <!-- 监控数据库 -->
+        <!-- <property name="filters" value="stat" /> -->
+        <property name="filters" value="mergeStat" />
+    </bean>
+     
+</beans>
