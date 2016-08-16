@@ -22,26 +22,24 @@
 * git版本控制
 
 #### 后端
-* IoC容器 spring
-* web框架 springmvc
-* orm框架 mybatis + spring data jpa(待实现)
+* IoC容器 spring , springmvc , cglib动态代理AOP实现
+* orm框架 mybatis (待实现) , 验证框架 hibernate validator
 * 安全框架 shiro(待实现)
-* 验证框架 hibernate validator
 * 任务调度框架 quartz
-* 缓存 memcached + NoSql:Redis缓存
+* 消息队列 rabbitmq + activemq (实际使用可选其中合适之一)
+* 缓存 Memcached + Redis缓存/集群
 * 数据源 druid
 * 日志 log4j
-* Json fastjson
-* servlet 3.0(需要支持servlet3的servlet容器，如tomcat7)
 * jsp 模板视图 velocity(待实现)
 
 #### 前端
 * jquery js框架
-* Bootstrap - gentelella界面框架
+* Bootstrap - gentelella 管理界面模版
 * font-wesome 字体/图标框架
 * jquery Validation Engine 验证框架（配合spring的验证框架）
 * dataTable表格控件
 * bootstrap-fileinput文件上传插件
+* Echarts / highcharts图表插件
 * jquery blockUI/confirm.js 弹出框/遮罩框架
 * jquery-fileupload 文件上传
 * bootstrap-datatimepicker 日历选择
