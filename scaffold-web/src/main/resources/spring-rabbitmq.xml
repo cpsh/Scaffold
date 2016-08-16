@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+	                    http://www.springframework.org/schema/task  
+                        http://www.springframework.org/schema/task/spring-task-3.2.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+                        http://www.springframework.org/schema/beans 
+	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	                    http://www.springframework.org/schema/rabbit
+                        http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd"
+	xmlns:task="http://www.springframework.org/schema/task">
+
+    <context:annotation-config/>
+    <mvc:annotation-driven />
+    <!-- 自动扫描的包名 扫描指定的包中的类上的注解 -->
+    <context:component-scan base-package="com.cpsh"></context:component-scan>
+    
+	<!--   ==========================    官方文档示例配置        ==========================     -->
+	
+<!-- 	
+	<rabbit:connection-factory id="connectionFactory"
+		host="192.168.230.131" port="5672" username="admin" password="123456" />
+
+	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
+		exchange="spring-amqp-TopicExchange" routing-key="foo.bar" />
+
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<rabbit:queue name="spring-amqp-Queue" />
+
+	<rabbit:topic-exchange name="spring-amqp-TopicExchange">
+		<rabbit:bindings>
+			<rabbit:binding queue="spring-amqp-Queue" pattern="foo.*" />
+		</rabbit:bindings>
+	</rabbit:topic-exchange>
+
+	<rabbit:listener-container connection-factory="connectionFactory">
+		<rabbit:listener ref="consumer" method="listen" queue-names="spring-amqp-Queue" />
+	</rabbit:listener-container>
+    
+	<bean id="consumer" class="com.cpsh.rabbitMQ.spring_amqp.SimpleMain.SimpleBean" />
+    
+    -->
+    
+    <!--   ==========================    官方文档示例配置        ==========================     -->
+    
+    
+    
+    <!-- __________________________________example_1 :  使用命名空间标签进行配置________________________________________ -->    
+  
+    
+    <!-- 连接配置 -->
+
+    <!-- virtual-host="group_host1" -->
+    <rabbit:connection-factory id="connectionFactory" host="192.168.230.131" port="5672" username="admin" password="123456" />
+        
+    <rabbit:admin connection-factory="connectionFactory" />
+    
+    <!-- 队列 -->
+    <rabbit:queue id="queue_1" name="queue_1" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="queue_2" name="queue_2" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="queue_3" name="queue_3" durable="false" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="queue_4" name="queue_4" durable="false" auto-delete="false" exclusive="false" />
+    
+    <!-- 交换器 -->
+    <rabbit:direct-exchange name="mq-DirectExchange" durable="false" auto-delete="false" id="mq-DirectExchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_1" key="queue_1"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+    <rabbit:topic-exchange name="mq-TopicExchange" durable="false" auto-delete="false" id="mq-TopicExchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_2" pattern="*.rabbit"></rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+    <rabbit:fanout-exchange name="mq-FanoutExchange" durable="false" auto-delete="false" id="mq-FanoutExchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_3" ></rabbit:binding>
+            <rabbit:binding queue="queue_4" ></rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:fanout-exchange>
+    
+    
+    <!-- 监听类设置 queue litener  观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象-->  
+    <rabbit:listener-container id="container1" connection-factory="connectionFactory">
+        <rabbit:listener queues="queue_1" ref="queueDirectLitener"/>
+        <rabbit:listener queues="queue_2" ref="queueTopicLitener"/>
+        <rabbit:listener queues="queue_3" ref="queueFanoutLitener"/>
+        <rabbit:listener queues="queue_4" ref="queueFanoutLitener"/>
+    </rabbit:listener-container >
+    
+	<bean id="queueDirectLitener" class="com.cpsh.rabbitMQ.spring_amqp.example_1.DirectListenter" />
+	<bean id="queueTopicLitener"  class="com.cpsh.rabbitMQ.spring_amqp.example_1.TopicListenter" />
+	<bean id="queueFanoutLitener"  class="com.cpsh.rabbitMQ.spring_amqp.example_1.FanoutListenter" />
+
+    <!-- spring template声明-->
+    <rabbit:template id="directTemplate" exchange="mq-DirectExchange" connection-factory="connectionFactory" message-converter="jsonMessageConverter_Fastjson" />
+    <rabbit:template id="topicTemplate"  exchange="mq-TopicExchange"  connection-factory="connectionFactory" message-converter="jsonMessageConverter_Fastjson"
+    routing-key="test.rabbit"/>
+    <rabbit:template id="fanoutTemplate" exchange="mq-FanoutExchange" connection-factory="connectionFactory" message-converter="jsonMessageConverter_Fastjson" />
+    
+    
+    
+	 
+    <!-- 消息对象json转换类 -->
+    <bean id="jsonMessageConverter_Jaskson" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter" />  
+
+    <!-- spring amqp默认的是jackson 的一个插件,目的将生产者生产的数据转换为json存入消息队列， 由于fastjson的速度快于jackson,这里替换为fastjson的一个实现 -->
+    <bean id="jsonMessageConverter_Fastjson"  class="com.cpsh.rabbitMQ.spring_amqp.example_1.FastJsonMessageConverter"></bean>
+    
+    
+    
+</beans>
