@@ -26,7 +26,7 @@
     <appender name="filelog_appender"    
         class="org.apache.log4j.RollingFileAppender">    
         <!-- 设置File参数：日志输出文件名 -->    
-        <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log/testlog4jxml_all.log" />    
+        <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log_xml/testlog4jxml_all.log" />    
         <!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->    
         <param name="Append" value="true" />    
         <!-- 设置文件大小 -->    
@@ -41,7 +41,7 @@
     
 <!-- 输出到日志文件 每天一个日志  -->    
     <appender name="filelog_daily" class="org.apache.log4j.DailyRollingFileAppender">       
-        <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log/daily.log" />       
+        <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log_xml/daily.log" />       
         <param name="DatePattern" value="'daily.'yyyy-MM-dd'.log'" />       
         <layout class="org.apache.log4j.PatternLayout">       
             <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss\} %-5p] [%t] (%c:%L) - %m%n" />       
@@ -64,7 +64,7 @@
    
       <!-- [Debug日志] --> 
    <appender name="debug" class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log/debug.log" />  
+     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log_xml/debug.log" />  
      <param name="Append" value="true" />  
      <param name="threshold" value="Debug" />  
      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
@@ -80,7 +80,7 @@
    
    <!-- [Info日志] --> 
    <appender name="info" class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log/info.log" />  
+     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log_xml/info.log" />  
      <param name="Append" value="true" />  
      <param name="threshold" value="Info" />  
      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
@@ -96,7 +96,7 @@
    
    <!-- [Warn日志] --> 
    <appender name="warn" class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log/warn.log" />  
+     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log_xml/warn.log" />  
      <param name="Append" value="true" />  
      <param name="threshold" value="Warn" />  
      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
@@ -112,7 +112,7 @@
    
    <!-- [错误日志] -->  
    <appender name="error" class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log/error.log" />  
+     <param name="File" value="F:/cpsh/dev_workspace/dev_log4j/log_xml/error.log" />  
      <param name="Append" value="true" />  
      <param name="threshold" value="Error" />  
      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  
@@ -167,7 +167,13 @@
         <appender-ref ref="error"/>
     </logger> 
     
-  
+  <logger name="com.scaffold" additivity="false">     
+        <appender-ref ref="debug" /> 
+        <appender-ref ref="info"/> 
+        <appender-ref ref="warn"/> 
+        <appender-ref ref="error"/>
+    </logger>
+    
    <!--通过<category></category>的定义,
         可以将各个包中的类日志输出到不同的日志文件中-->  
 	 <!--  

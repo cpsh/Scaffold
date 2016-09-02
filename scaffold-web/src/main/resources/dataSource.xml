@@ -44,14 +44,24 @@
 		<property name="breakAfterAcquireFailure" value="true" />
 		<property name="testConnectionOnCheckout" value="false" />
 	</bean>
- -->	
+ -->
+ 
+    <context:property-placeholder location="classpath:db/jdbc.properties" />
+ 	<!-- 
+ 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+	    <property name="locations"> 
+	        <list> 
+	            <value>/WEB-INF/classes/db/jdbc.properties</value> 
+	       </list> 
+	    </property> 
+	</bean> 
+ 	 -->
+ 	
 	<!-- druid 数据库链接池配置 -->
 	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="url" >
-            <value>jdbc:mysql://192.168.1.200/51auto_v4?user=root&amp;password=51auto_v4&amp;useServerPrepStmts=false&amp;useUnicode=true&amp;characterEncoding=gbk&amp;jdbcCompliantTruncation=false</value>
-        </property>
-        <property name="username" value="root" />
-        <property name="password" value="51auto_v4" />
+        <property name="url" value="${master_driverUrl}"/>
+        <property name="username" value="${master_username}" />
+        <property name="password" value="${master_password}" />
 
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="0" />

@@ -17,7 +17,7 @@ public class Log4jXMLConfig {
   
     private Log4jXMLConfig()  
     {  
-        //final URL url = Log4jXMLConfig.class.getResource("/WEB-INF/log4j.xml");
+//        final URL url = Log4jXMLConfig.class.getResource("/WEB-INF/log4j.xml");
         final String url = "WebRoot/WEB-INF/log4j.xml";
         DOMConfigurator.configure(url);  
     } 
