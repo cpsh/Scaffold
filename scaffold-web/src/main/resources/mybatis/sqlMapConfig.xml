@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+
+<configuration>
+    <!-- 进行mybatis 配置 -->
+    
+    <!-- 为类型 起了别名，在对应的sql配置文件xml中对该类型进行引用 -->
+
+    <typeAliases>
+        <typeAlias type="com.scaffold.model.SysLog" alias="SysLog"/>
+        <typeAlias type="com.scaffold.model.Resource" alias="Resource"/>
+        
+        <!-- 为实体类com.scaffold.model.Resource配置一个别名Resource -->
+        
+        <!-- 为com.scaffold.model包下的所有实体类配置别名，MyBatis默认的设置别名的方式就是去除类所在的包后的简单的类名
+                          比如com.scaffold.model.Resource这个实体类的别名就会被设置成Resource
+         -->
+<!--         <package name="com.scaffold.model"/> -->
+        
+        
+    </typeAliases>
+
+    <!-- 引入自定义 mapper 文件 -->
+    <!-- <mappers>
+        从库测试
+        
+        <mapper resource="sqlMapperXml/SlaveMapper.xml"/>
+        <mapper resource="sqlMapperXml/OrganizationMapper.xml"/>
+        <mapper resource="sqlMapperXml/UserMapper.xml"/>
+        
+        <mapper resource="sqlMapperXml/RoleMapper.xml"/>
+        <mapper resource="sqlMapperXml/UserRoleMapper.xml"/>
+        <mapper resource="sqlMapperXml/RoleResourceMapper.xml"/> 
+       
+        
+        <mapper resource="sqlMapperXml/SysLogMapper.xml"/>
+        <mapper resource="sqlMapperXml/ResourceMapper.xml"/> 
+        
+    </mappers> -->
+</configuration> 
