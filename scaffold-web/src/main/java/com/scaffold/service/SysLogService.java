@@ -2,6 +2,8 @@ package com.scaffold.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.scaffold.model.SysLog;
 
 /**
@@ -9,6 +11,7 @@ import com.scaffold.model.SysLog;
  * @author：sanboot
  * @date：2015/10/30 10:35
  */
+@Service
 public interface SysLogService {
 
     void insertLog(SysLog sysLog);
