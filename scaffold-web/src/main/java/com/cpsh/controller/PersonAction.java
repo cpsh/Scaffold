@@ -19,14 +19,9 @@ import com.cpsh.service.ServiceImpl.PersonService;
 
 @Controller
 public class PersonAction {
-    private final IServPerson service;
     
     @Autowired
-    public PersonAction(PersonService service) {
-        this.service = service;
-    }
-    
-    
+    private IServPerson service;
     
     
     @RequestMapping(value = "/personList")
