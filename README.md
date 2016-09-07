@@ -23,7 +23,7 @@
 
 #### 后端
 * IoC容器 spring , springmvc , cglib动态代理AOP实现
-* orm框架 mybatis (待实现) , 验证框架 hibernate validator
+* orm框架 mybatis , 验证框架 hibernate validator
 * 安全框架 shiro(待实现)
 * 任务调度框架 quartz
 * 消息队列 rabbitmq + activemq (实际使用可选其中合适之一)
