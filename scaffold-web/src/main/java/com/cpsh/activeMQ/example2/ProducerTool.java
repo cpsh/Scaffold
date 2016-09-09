@@ -13,7 +13,7 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import com.cpsh.util.DateUtil;
+import com.scaffold.common.util.DateUtil;
 
 /**
  * ProducerTool.java用于发送消息：

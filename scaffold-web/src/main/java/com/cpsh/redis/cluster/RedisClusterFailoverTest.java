@@ -10,7 +10,7 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
 
-import com.cpsh.util.Log4jXMLConfig;
+import com.scaffold.common.util.Log4jXMLConfig;
 
 /**
  * 集群扩展，添加/撤销节点，可用性测试

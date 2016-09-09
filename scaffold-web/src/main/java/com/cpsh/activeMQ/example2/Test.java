@@ -6,8 +6,8 @@ import org.apache.activemq.ActiveMQConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.cpsh.util.Log4jXMLConfig;
-import com.cpsh.util.LoggerUtil;
+import com.scaffold.common.util.Log4jXMLConfig;
+import com.scaffold.common.util.LoggerUtil;
     
 public class Test {   
     /*

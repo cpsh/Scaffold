@@ -55,7 +55,7 @@
         </javaClientGenerator>
 
 
-        <table schema="sanboot" tableName="role" domainObjectName="Role"
+        <table schema="sanboot" tableName="role_resource" domainObjectName="RoleResource"
                enableCountByExample="false"
                enableDeleteByExample="false"
                enableUpdateByExample="false"

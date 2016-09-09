@@ -14,7 +14,7 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import com.cpsh.util.DateUtil;
+import com.scaffold.common.util.DateUtil;
 
 /**
  * 用于接受消息，基于消息监听的机制，需要实现MessageListener接口，这个接口有个onMessage方法，

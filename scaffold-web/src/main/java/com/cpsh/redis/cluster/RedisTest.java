@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 
-import com.cpsh.util.Log4jXMLConfig;
+import com.scaffold.common.util.Log4jXMLConfig;
 
 public class RedisTest {
     private static Logger logger_xml ; 

@@ -7,7 +7,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import redis.clients.jedis.JedisCluster;
 
-import com.cpsh.util.Log4jXMLConfig;
+import com.scaffold.common.util.Log4jXMLConfig;
 
 public class RedisClusterSpringTest {
     private static Logger logger_xml ; 

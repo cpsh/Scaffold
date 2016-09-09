@@ -1,4 +1,4 @@
-package com.cpsh.util;
+package com.scaffold.common.util;
 
 import java.net.URL;  
 import org.apache.log4j.xml.DOMConfigurator;

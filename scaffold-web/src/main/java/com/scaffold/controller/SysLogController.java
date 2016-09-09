@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cpsh.util.LoggerUtil;
+import com.scaffold.common.util.LoggerUtil;
 import com.scaffold.model.SysLog;
 import com.scaffold.service.SysLogService;
 

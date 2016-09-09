@@ -9,8 +9,8 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
-import com.cpsh.util.Log4jXMLConfig;
-import com.cpsh.util.LoggerUtil;
+import com.scaffold.common.util.Log4jXMLConfig;
+import com.scaffold.common.util.LoggerUtil;
 
 public class RedisSpringTest {
     private static Logger logger_xml ; 

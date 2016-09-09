@@ -31,7 +31,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cpsh.model.Person;
-import com.cpsh.util.ParamUtil;
+import com.scaffold.common.util.ParamUtil;
 
 @Controller
 public class HelloAction {
