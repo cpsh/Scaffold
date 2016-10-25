@@ -12,6 +12,7 @@
 		<module>scaffold-common</module>
 		<module>scaffold-config</module>
 		<module>scaffold-web</module>
+		<module>scaffold-webservice</module>
 	</modules>
 
 	<properties>
@@ -336,6 +337,13 @@
 				<artifactId>c3p0</artifactId>
 				<version>0.9.1.2</version>
 			</dependency>
+			
+			<!-- apache-cxf webservice -->
+			<dependency>
+		        <groupId>org.apache.cxf</groupId>
+		        <artifactId>apache-cxf</artifactId>
+		        <version>3.1.8</version>
+		    </dependency>
 
 			<!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->
 			<!-- <dependency> <groupId>com.rabbitmq</groupId> <artifactId>amqp-client</artifactId> 
