@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- 默认的注解映射的支持 默认配置方案, 自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 
+		两个bean,是spring MVC为@Controllers分发请求所必须的 映射到具体的Action中的方法 -->
+	<mvc:annotation-driven />
+
+
+ <!-- 扫描controller,service,dao，使配置注解AspectJ的方面生效 -->
+    <context:component-scan base-package="com.scaffold">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>-->
+    </context:component-scan>
+    
+	<!-- 自动扫描的包名 扫描指定的包中的类上的注解 -->
+	<context:component-scan base-package="com.*"></context:component-scan>
+    
+    <!-- 启用CGliB proxy-target-class="true"-->
+    <aop:aspectj-autoproxy />
+
+	<!-- 视图解释类 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/views/" />
+		<!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑 -->
+		<property name="suffix" value=".jsp" />
+
+	</bean>
+
+	<!-- 异常错误处理 -->
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView">
+			<value>/error/404</value>
+		</property>
+		<property name="defaultStatusCode">
+			<value>500</value>
+		</property>
+		<property name="warnLogCategory">
+			<value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>
+		</property>
+	</bean>
+
+	<!-- 对静态资源文件的访问 方案一 -->
+
+	<!-- <mvc:default-servlet-handler /> -->       <!-- 使用默认的Servlet来响应静态文件 -->
+
+	<!-- 对静态资源文件的访问 方案二 匹配URL 
+	    /images/** 的URL被当做静态资源，由Spring读出到内存中再响应http /images/**映射到ResourceHttpRequestHandler进行处理，
+	    location指定静态资源的位置.可以是web application根目录 下、jar包里面，这样可以把静态资源压缩到jar包中。
+	    cache-period 可以使得静态资源进行web cache -->
+	 <mvc:resources mapping="/res/images/**" location="/common/images/" cache-period="31556926" /> 
+	 <mvc:resources mapping="/res/js/**" location="/common/js/" cache-period="31556926" /> 
+	 <mvc:resources mapping="/res/css/**" location="/common/css/" cache-period="31556926"/> 
+
+</beans>

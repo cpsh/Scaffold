@@ -1,0 +1,5 @@
+使用apache-cxf工具 wsdl2java命令，根据第三方wsdl文件，配置参数，生成java文件。
+
+配置cxf环境变量，调用命令
+wsdl2java -p packname -d gener_dir [-frontend jaxws21] [-encoding utf-8] http://localhost:8090/scaffold-webservice/SurveyWebService?wsdl
+生成具体java代码,之后在client调用service服务代码。
