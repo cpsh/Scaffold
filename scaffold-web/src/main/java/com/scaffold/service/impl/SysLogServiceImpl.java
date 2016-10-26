@@ -10,11 +10,6 @@ import com.scaffold.dao.SysLogMapper;
 import com.scaffold.model.SysLog;
 import com.scaffold.service.SysLogService;
 
-/**
- * @description：
- * @author：sanboot
- * @date：2015/10/30 10:40
- */
 @Service
 public class SysLogServiceImpl implements SysLogService {
     @Autowired

@@ -20,11 +20,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.scaffold.model.SysLog;
 
-/**
- * @description：AOP 日志
- * @author：sanboot
- * @date：2015/10/28 18:04
- */
 @Aspect
 @Component
 public class SysLogAop {

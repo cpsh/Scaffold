@@ -20,8 +20,6 @@ import java.util.Set;
 
 /**
  * @description：shiro权限认证
- * @author：sanboot
- * @date：2015/10/1 14:51
  */
 public class ShiroDbRealm extends AuthorizingRealm {
 
@@ -71,7 +69,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
             List<Map<Long, String>> roleResourceList = roleService.findRoleResourceListByRoleId(roleId);
             if (roleResourceList != null) {
                 for (Map<Long, String> map : roleResourceList) {
-                    if (StringUtils.isNoneBlank(map.get("url"))) {
+                    if (StringUtils.isNotBlank(map.get("url"))) {
                         urlSet.add(map.get("url"));
                     }
                 }

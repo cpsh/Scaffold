@@ -8,8 +8,6 @@ import com.scaffold.model.SysLog;
 
 /**
  * @description：操作日志
- * @author：sanboot
- * @date：2015/10/30 10:35
  */
 @Service
 public interface SysLogService {

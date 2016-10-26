@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * @description：自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息
- * @author：sanboot
- * @date：2015/10/1 14:51
  */
 public class ShiroUser implements Serializable {
 

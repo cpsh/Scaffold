@@ -2,11 +2,6 @@ package com.scaffold.util;
 
 import java.util.List;
 
-/**
- * @description：TreeVO
- * @author：sanboot
- * @date：2015/10/1 14:51
- */
 public class Tree implements java.io.Serializable {
 
     private static final long serialVersionUID = 980682543891282923L;

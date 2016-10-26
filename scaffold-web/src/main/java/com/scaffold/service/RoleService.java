@@ -7,11 +7,6 @@ import com.scaffold.model.Role;
 import com.scaffold.util.PageInfo;
 import com.scaffold.util.Tree;
 
-/**
- * @description：权限管理
- * @author：sanboot
- * @date：2015/10/1 14:51
- */
 public interface RoleService {
     /**
      * 查询权限列表

@@ -9,8 +9,6 @@ import com.scaffold.model.Role;
 
 /**
  * @description：UserVo
- * @author：sanboot
- * @date：2015/10/1 14:51
  */
 public class UserVo implements Serializable {
     private Long id;

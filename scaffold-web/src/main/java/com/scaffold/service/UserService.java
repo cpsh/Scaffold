@@ -4,11 +4,6 @@ import com.scaffold.model.User;
 import com.scaffold.util.PageInfo;
 import com.scaffold.util.UserVo;
 
-/**
- * @description：用户管理
- * @author：sanboot
- * @date：2015/10/1 14:51
- */
 public interface UserService {
     /**
      * 根据用户名查询用户
