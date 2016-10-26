@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/task  
                         http://www.springframework.org/schema/task/spring-task-3.2.xsd
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-3.2.xsd
                         http://www.springframework.org/schema/beans 
-	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
-	xmlns:task="http://www.springframework.org/schema/task">
+	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
 	<!-- 数据库链接池配置 -->
 	<import resource="dataSource.xml" />
@@ -30,14 +31,17 @@
 	<!-- <import resource="spring-rabbitmq.xml"/> -->
 
 
-	<!-- Spring整合MyBatis使用到了mybatis-spring，在配置mybatis映射文件的时候， 一般会使用MapperScannerConfigurer，MapperScannerConfigurer会自动扫描basePackage指定的包， 
+	<!-- Spring整合MyBatis使用到了mybatis-spring，在配置mybatis映射文件的时候， 
+		一般会使用MapperScannerConfigurer，MapperScannerConfigurer会自动扫描basePackage指定的包， 
 		找到映射接口类和映射XML文件，并进行注入 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
-		<property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"></property>
+		
+		<!-- 支持AOP动态切换数据源  dynamicDataSource -->
+		<property name="dataSource" ref="dynamicDataSource"/>
+		<property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"/>
 
 		<!-- 当mybatis的xml文件和mapper接口不在相同包下时，需要用mapperLocations属性指定xml文件的路径。 *是个通配符，代表所有的文件，**代表所有目录下 -->
-		<property name="mapperLocations" value="classpath:mybatis/sqlMapperXML/*.xml" />
+<!-- 		<property name="mapperLocations" value="classpath:mybatis/sqlMapperXML/*.xml" /> -->
 
 	</bean>
 
@@ -47,5 +51,6 @@
 		<property name="basePackage" value="com.scaffold.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
 	</bean>
+	
 
 </beans>
