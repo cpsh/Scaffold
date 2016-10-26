@@ -3,14 +3,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context" 
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/task  
                         http://www.springframework.org/schema/task/spring-task-3.2.xsd
                         http://www.springframework.org/schema/context
                         http://www.springframework.org/schema/context/spring-context-3.2.xsd
                         http://www.springframework.org/schema/beans 
-	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
-	xmlns:task="http://www.springframework.org/schema/task">
+	                    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	                    http://www.springframework.org/schema/aop
+    					http://www.springframework.org/schema/aop/spring-aop.xsd
+	                    http://www.springframework.org/schema/tx 
+    					http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+<!-- 扫描service、dao -->
+    <context:component-scan base-package="com.scaffold">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
     <!-- c3p0 数据库链接池配置 -->
 <!-- 	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
@@ -57,12 +68,15 @@
 	</bean> 
  	 -->
  	
-	<!-- druid 数据库链接池配置 -->
-	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	<!-- druid 数据库链接池配置  设置动态切换数据源，init-method需要自定义覆盖 或 不设置-->
+	<bean name="BasedataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <!-- 初始数据源不设置连接信息,便于下面使用动态数据源DynamicDataSlource进行主从库切换 -->
+        <!-- 
         <property name="url" value="${master_driverUrl}"/>
         <property name="username" value="${master_username}" />
         <property name="password" value="${master_password}" />
-
+		-->
+		
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="0" />
         <!-- 连接池最大使用连接数量 -->
@@ -97,5 +111,63 @@
         <!-- <property name="filters" value="stat" /> -->
         <property name="filters" value="mergeStat" />
     </bean>
+     
+     
+     <!-- 数据源 - 事务管理 -->
+	
+	<!-- 主库 -->
+    <bean name="master-dataSource" parent="BasedataSource" init-method="init">
+        <property name="url" value="${master_driverUrl}" />
+        <property name="username" value="${master_username}" />
+        <property name="password" value="${master_password}" />
+    </bean>
+    
+    <!-- 从库 -->
+    <bean name="slave-dataSource" parent="BasedataSource" init-method="init">
+        <property name="url" value="${slave_driverUrl}" />
+        <property name="username" value="${slave_username}" />
+        <property name="password" value="${slave_password}" />
+    </bean>
+
+	<!--动态数据源  - 
+		自定义注解DataSourceChange(slave=true),通过AspectJ-AOP方式在程序中进行主从库选择
+	-->
+    <bean id="dynamicDataSource" class="com.scaffold.datasource.DynamicDataSource">
+        <property name="master" ref="master-dataSource"/>
+        <property name="slaves">
+            <list>
+                <ref bean="slave-dataSource"/>
+            </list>
+        </property>
+    </bean>
+    
+    <!--数据源切面注入spring-->
+    <bean id="dsChangeAspect" class="com.scaffold.aop.DataSourceAspect"/>
+	
+	
+    
+	<!-- 事务管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dynamicDataSource"/>
+    </bean>
+
+    <!-- 事务管理 属性 -->
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置切面 -->
+    <aop:config>
+        <aop:advisor advice-ref="transactionAdvice" pointcut="execution(* com.scaffold.service..*.*(..))"/>
+    </aop:config>
      
 </beans>

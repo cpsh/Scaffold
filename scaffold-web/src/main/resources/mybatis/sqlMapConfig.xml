@@ -23,20 +23,30 @@
     </typeAliases>
 
     <!-- 引入自定义 mapper 文件 -->
-    <!-- <mappers>
-        从库测试
+    
+    <!-- resource属性指定的是相对于跟类路径下的资源，url属性指定的是通过URL可以获取到的资源 -->
+      
+     <mappers>
+        <!-- 主从库 -->
+        <mapper resource="com/scaffold/dao/maps/SysLogMapper.xml"/>
+        <mapper resource="com/scaffold/dao/maps/RoleMapper.xml"/>
+        <mapper resource="com/scaffold/dao/maps/UserMapper.xml"/>
+        <mapper resource="com/scaffold/dao/maps/UserRoleMapper.xml"/>
+        <mapper resource="com/scaffold/dao/maps/RoleResourceMapper.xml"/> 
+        <mapper resource="com/scaffold/dao/maps/ResourceMapper.xml"/>
         
-        <mapper resource="sqlMapperXml/SlaveMapper.xml"/>
-        <mapper resource="sqlMapperXml/OrganizationMapper.xml"/>
-        <mapper resource="sqlMapperXml/UserMapper.xml"/>
+        <!-- 
+        <mapper resource="mybatis/sqlMapperXml/SysLogMapper.xml"/>
+        <mapper resource="mybatis/sqlMapperXml/RoleMapper.xml"/>
+        <mapper resource="mybatis/sqlMapperXml/OrganizationMapper.xml"/>
+        <mapper resource="mybatis/sqlMapperXml/UserMapper.xml"/>
+        <mapper resource="mybatis/sqlMapperXml/UserRoleMapper.xml"/>
+        <mapper resource="mybatis/sqlMapperXml/RoleResourceMapper.xml"/> 
+        <mapper resource="mybatis/sqlMapperXml/ResourceMapper.xml"/>
         
-        <mapper resource="sqlMapperXml/RoleMapper.xml"/>
-        <mapper resource="sqlMapperXml/UserRoleMapper.xml"/>
-        <mapper resource="sqlMapperXml/RoleResourceMapper.xml"/> 
-       
+         -->
         
-        <mapper resource="sqlMapperXml/SysLogMapper.xml"/>
-        <mapper resource="sqlMapperXml/ResourceMapper.xml"/> 
-        
-    </mappers> -->
+    </mappers>
+    
+     
 </configuration> 

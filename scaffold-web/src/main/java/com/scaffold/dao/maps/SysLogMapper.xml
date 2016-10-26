@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.scaffold.dao.SysLogMapper">
+	<resultMap id="BaseResultMap" type="com.scaffold.model.SysLog">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+		<result column="opt_content" property="optContent" jdbcType="VARCHAR" />
+		<result column="client_ip" property="clientIp" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<!-- parameterType属性指明查询时使用的参数类型，可使用别名
+         resultType属性指明查询返回的结果集类型
+         resultType="com.scaffold.model.SysLog"就表示将查询结果封装成一个SysLog类的对象返回 
+         SysLog类就是SysLog表所对应的实体类 
+    -->
+    
+	<sql id="Base_Column_List">
+		id, login_name, role_name, opt_content, client_ip, create_time
+	</sql>
+	<select id="selectSysLogs" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from syslog limit 0,50
+    </select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from syslog
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from syslog
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="SysLog">
+		<selectKey resultType="java.lang.Long" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into syslog (login_name, role_name, opt_content,
+		client_ip, create_time)
+		values (#{loginName,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR},
+		#{optContent,jdbcType=VARCHAR},
+		#{clientIp,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="SysLog">
+		<selectKey resultType="java.lang.Long" keyProperty="id"
+			order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into syslog
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="roleName != null">
+				role_name,
+			</if>
+			<if test="optContent != null">
+				opt_content,
+			</if>
+			<if test="clientIp != null">
+				client_ip,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="loginName != null">
+				#{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="optContent != null">
+				#{optContent,jdbcType=VARCHAR},
+			</if>
+			<if test="clientIp != null">
+				#{clientIp,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="SysLog">
+		update syslog
+		<set>
+			<if test="loginName != null">
+				login_name = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleName != null">
+				role_name = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="optContent != null">
+				opt_content = #{optContent,jdbcType=VARCHAR},
+			</if>
+			<if test="clientIp != null">
+				client_ip = #{clientIp,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="SysLog">
+		update syslog
+		set login_name = #{loginName,jdbcType=VARCHAR},
+		role_name = #{roleName,jdbcType=VARCHAR},
+		opt_content = #{optContent,jdbcType=VARCHAR},
+		client_ip = #{clientIp,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>
