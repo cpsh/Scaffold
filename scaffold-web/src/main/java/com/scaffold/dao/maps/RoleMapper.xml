@@ -11,6 +11,12 @@
   <sql id="Base_Column_List" >
     id, name, seq, description, status
   </sql>
+  
+  <select id="findRoleAll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/>
+  	from role
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
