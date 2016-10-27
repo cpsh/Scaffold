@@ -15,7 +15,6 @@ public interface RoleService {
      */
     void findDataGrid(PageInfo pageInfo);
     
-    
     /**
      * 查询所有权限
      * @return
@@ -90,4 +89,9 @@ public interface RoleService {
      */
     List<Map<Long, String>> findRoleResourceListByRoleId(Long roleId);
 
+    /**
+     * 异常出错测试方法
+     * @param role
+     */
+    void errorTransaction(Role role);
 }

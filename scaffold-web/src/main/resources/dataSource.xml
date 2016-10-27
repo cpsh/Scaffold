@@ -147,6 +147,16 @@
 	
     
 	<!-- 事务管理 -->
+	<!-- 声明式事务开启注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<!--事务管理器模板 使用事务-->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"></property>
+    </bean>
+	
+	
+	
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dynamicDataSource"/>
     </bean>

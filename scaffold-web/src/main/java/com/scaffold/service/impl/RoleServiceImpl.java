@@ -123,4 +123,10 @@ public class RoleServiceImpl implements RoleService {
         return roleMapper.findRoleResourceListByRoleId(roleId);
     }
 
+	@Override
+	public void errorTransaction(Role role) {
+		throw new BizException("手动抛出一条异常消息，测试事务");
+		
+	}
+
 }
