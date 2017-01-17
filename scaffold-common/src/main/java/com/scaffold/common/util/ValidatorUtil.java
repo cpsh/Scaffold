@@ -1,4 +1,4 @@
-package com.omniprimeinc.audit.platform.autojobs.services.utils;
+package com.scaffold.common.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

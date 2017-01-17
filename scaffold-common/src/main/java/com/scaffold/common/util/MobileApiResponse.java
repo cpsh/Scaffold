@@ -1,4 +1,4 @@
-package com.omniprimeinc.audit.platform.autojobs.services.utils;
+package com.scaffold.common.util;
 
 /**
  *调用手机归属查询接口http://sj.apidata.cn/，返回json格式信息

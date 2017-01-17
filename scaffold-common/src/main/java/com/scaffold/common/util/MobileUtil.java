@@ -1,18 +1,12 @@
-package com.omniprimeinc.audit.platform.autojobs.services.utils;
+package com.scaffold.common.util;
 
 import com.google.gson.Gson;
-import com.omniprimeinc.component.common.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by shichp on 2016/12/10.
@@ -33,7 +27,7 @@ public class MobileUtil {
         String data = "";
         String json = "";
 
-        if (StringUtil.isEmpty(mobile)) {
+        if (StringUtils.isEmpty(mobile)) {
             message = "手机号码为空";
             status = 0;
             mobileApiResponse = new MobileApiResponse();
@@ -47,7 +41,7 @@ public class MobileUtil {
         if (isVaild) {
             String url = MOBILE_URL + "?mobile=" + mobile;
             try {
-                Map<String, String> params = new LinkedHashMap<>();
+                Map<String, String> params = new LinkedHashMap<String,String>();
                 params.put("mobile", mobile);
                 json = invokeRestTemplateMethod(restTemplate, MOBILE_URL, params, String.class, HttpMethod.GET);
                 //   json = rest.getForObject(url,String.class);//最简单
@@ -119,7 +113,7 @@ public class MobileUtil {
                         buffer.append(key).append("=").append(map.get(key)).append("&");
                     }
                 }
-                if (StringUtil.isNotEmpty(buffer.toString())) {
+                if (StringUtils.isNotEmpty(buffer.toString())) {
                     getParams += buffer.toString();
                     getParams = getParams.substring(0, getParams.length() - 1);
                 }

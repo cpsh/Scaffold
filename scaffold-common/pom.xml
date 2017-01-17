@@ -27,6 +27,10 @@
 			<artifactId>spring-beans</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
 		<!-- spring end -->
 
 
@@ -52,7 +56,11 @@
 			<artifactId>commons-httpclient</artifactId>
 		</dependency>
 
-
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.7</version>
+		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -88,10 +96,6 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>
-
-
-
-
 
 	</dependencies>
 
@@ -161,7 +165,7 @@
 						<configuration>
 							<type>jar</type>
 							<includeTypes>jar</includeTypes>
-							<useUniqueVersions>false</useUniqueVersions>
+							<!--<useUniqueVersions>false</useUniqueVersions>-->
 							<outputDirectory>
 								${project.build.directory}/lib
 							</outputDirectory>
